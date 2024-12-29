@@ -1,7 +1,9 @@
+[![Build Status](https://github.com/victorhroque/FactoryMethod/actions/workflows/dotnet.yml/badge.svg)](https://github.com/victorhroque/FactoryMethod/actions)
+
 # Resolución de Documentos con Clean Architecture, CQRS y Factory Method (.NET 8)
 
 Este repositorio contiene un ejemplo de implementación de la creación de documentos (resoluciones) utilizando los principios de Clean Architecture, el patrón CQRS (Command Query Responsibility Segregation) y el patrón Factory Method en .NET 8.
-
+[.gitignore](.gitignore)
 ## Descripción
 
 El proyecto simula la creación de dos tipos de resoluciones:
