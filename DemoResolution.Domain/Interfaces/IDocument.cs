@@ -1,7 +1,9 @@
-﻿namespace DemoResolution.Domain.Interfaces
+﻿using DemoResolution.Domain.POCO;
+
+namespace DemoResolution.Domain.Interfaces
 {
     public interface IDocument
     {
-        string CreatePDF(string studentCode);
+        DecanalResolution CreatePDF(string studentCode);
     }
 }

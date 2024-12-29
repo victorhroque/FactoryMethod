@@ -1,9 +1,12 @@
 ﻿using DemoResolution.Domain.Interfaces;
+using DemoResolution.Domain.POCO;
+using DemoResolution.Domain.Wrappers;
 using MediatR;
+using System.Diagnostics;
 
 namespace DemoResolution.Application.Command
 {
-    public class CreateResolutionCommandHandler : IRequestHandler<CreateResolutionCommand, string>
+    public class CreateResolutionCommandHandler : IRequestHandler<CreateResolutionCommand, AppResponse<DecanalResolution>>
     {
         private readonly IDocumentFactoryProvider _factoryProvider;
 
@@ -12,23 +15,39 @@ namespace DemoResolution.Application.Command
             _factoryProvider = factoryProvider;
         }
 
-        public Task<string> Handle(CreateResolutionCommand request, CancellationToken cancellationToken)
+        public Task<AppResponse<DecanalResolution>> Handle(CreateResolutionCommand request, CancellationToken cancellationToken)
         {
             try
             {
                 IDocumentFactory factory = _factoryProvider.GetFactory(request.ResolutionCode);
                 IDocument document = factory.CreateDocument();
-                return Task.FromResult(document.CreatePDF(request.StudentCode));
+                var response = new AppResponse<DecanalResolution>
+                {
+                    IsSuccess = true,
+                    Data = document.CreatePDF(request.StudentCode),
+                    Message = $"Documento generado para el estudiante {request.StudentCode} de tipo {request.ResolutionCode}"
+                };
+                return Task.FromResult(response);
             }
             catch (ArgumentException ex)
             {
-                Console.WriteLine(ex.Message);
-                return Task.FromResult(string.Empty);
+                Debug.WriteLine(ex.Message);
+                var response = new AppResponse<DecanalResolution>
+                {
+                    IsSuccess = false,
+                    Message = "Tipo de documento no válido"
+                };
+                return Task.FromResult(response);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                return Task.FromResult(string.Empty);
+                var response = new AppResponse<DecanalResolution>
+                {
+                    IsSuccess = false,
+                    Message = "Error inesperado"
+                };
+                return Task.FromResult(response);
             }
         }
     }

@@ -4,12 +4,12 @@ using DemoResolution.Infraestructure.Resolution;
 
 namespace DemoResolution.Infraestructure.ResolutionFactories
 {
-    [ResolutionCode("ResolutionJury")]
-    public class ResolutionJuryFactory : IDocumentFactory
+    [ResolutionCode("ResolutionAdviser")]
+    public class ResolutionAdviserFactory : IDocumentFactory
     {
         public IDocument CreateDocument()
         {
-            return new ResolutionJury();
+            return new ResolutionAdviser();
         }
     }
 }

@@ -1,16 +1,12 @@
-using DemoResolution.Application.Command;
-using DemoResolution.Domain.Interfaces;
-using DemoResolution.Infraestructure.ResolutionFactories;
+using DemoResolution.Infraestructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(CreateResolutionCommandHandler).Assembly));
-
-builder.Services.AddScoped<IDocumentFactoryProvider, DocumentFactoryProvider>();
-builder.Services.AddScoped<ResolutionJuryFactory>();
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(DemoResolution.Application.AssemblyReference).Assembly));
+builder.Services.RegisterFactories();
 
 var app = builder.Build();
 
